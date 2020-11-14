@@ -1,0 +1,4 @@
+endpoint: http://192.168.99.100:4466/reviews/default
+datamodel: datamodel.graphql
+# review is service name
+# default is stage name
