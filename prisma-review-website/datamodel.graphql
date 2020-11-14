@@ -1,5 +1,6 @@
 type User {
   id: ID! @id
+  userName: String!
   reviews: [Review!]! @relation(name: "ReviewToUser", onDelete: CASCADE)
 }
 type Book {
