@@ -1,63 +1,45 @@
+// prisma second arg can get null, string and object
+// null only gives you scalar types
 export default {
-  greeting(parent, args, ctx, info) {
-    const name = args.name || '';
-    const position = args.position || '';
-    return `Hello ${name}! You are my favorite ${position}.`;
-  },
-  grades(parent, args, ctx, info) {
-    return [40, 30, null, 20.8]; // 20.3 is converted null cuz it returns integer or null the other types become null
-  },
-  add(parent, args, ctx, info) {
-    return args.number1 + args.number2;
-  },
-  addWithArrays(parent, args) {
-    if (!args.numbers.length) {
-      return 0;
-    } else {
-      return args.numbers.reduce((acc, current) => acc + current);
+  users(parent, args, { prisma }, info) {
+    const opArgs = {};
+    if (args.query) {
+      opArgs.where = {
+        OR: [
+          {
+            name_contains: args.query,
+          },
+          {
+            email_contains: args.query,
+          },
+        ],
+      };
     }
+    return prisma.query.users(opArgs, info);
   },
-  me() {
-    return {
-      id: 'asdasd',
-      name: 'Ergun',
-      email: 'asdasd',
-    };
-  },
-  post() {
-    return {
-      id: '1234123',
-      title: 'Lotr',
-      body: 'War between evil and the others',
-      published: true,
-    };
-  },
-
-  users(parent, args, { db }, info) {
-    const { users } = db;
-    if (!args.query) {
-      return users;
+  posts(parents, args, { prisma }, info) {
+    const opArgs = {};
+    if (args.query) {
+      opArgs.where = {
+        OR: [
+          {
+            title_contains: args.query,
+          },
+          {
+            body_contains: args.query,
+          },
+        ],
+      };
     }
-    const containedQuery = args.query.trim();
-    return users.filter((user) => {
-      return user.name.trim().toLowerCase().includes(containedQuery.toLowerCase());
-    });
+    return prisma.query.posts(opArgs, info);
   },
-
-  posts(parents, args, { db }, info) {
-    const { posts } = db;
-    if (!args.query) {
-      return posts;
+  comments(parents, args, { prisma }, info) {
+    const opArgs = {};
+    if (args.query) {
+      opArgs.where = {
+        text_contains: args.query,
+      };
     }
-    const postQuery = args.query.trim().toLowerCase();
-    return posts.filter((post) => post.title.trim().toLowerCase().includes(postQuery));
-  },
-  comments(parents, args, { db }, info) {
-    const { comments } = db;
-    if (!args.query) {
-      return comments;
-    }
-    const query = args.query.toLowerCase().trim();
-    return comments.filter((comment) => comment.text.toLowerCase().includes(query));
+    return prisma.query.comments(opArgs, info);
   },
 };

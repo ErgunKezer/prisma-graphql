@@ -1,12 +1,5 @@
 type Query {
-  greeting(name: String, position: String): String!
-  add(number1: Float!, number2: Float!): Float!
-  addWithArrays(numbers: [Float!]!): Float!
-  grades: [Int]!
-  me: User!
-  post: Post!
   comments(query: String): [Comment!]!
-
   users(query: String): [User!]!
   posts(query: String): [Post!]!
 }

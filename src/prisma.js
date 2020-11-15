@@ -4,6 +4,8 @@ const prisma = new Prisma({
   endpoint: 'http://192.168.99.100:4466',
 });
 
+export default prisma;
+
 // first item what we gonna send as parameter
 // prisma.query.users(null, '{ id name posts { id title } }').then((data) => {
 //   console.log(JSON.stringify(data, null, 2));
@@ -89,26 +91,26 @@ const prisma = new Prisma({
 //   console.table(JSON.stringify(data, null, 2));
 // });
 
-const createPostForUser = async (id, data) => {
-  const postExist = await prisma.exists.Post({
-    id,
-  });
-  if (!postExist) {
-    throw new Error('Post not found');
-  }
-  const post = await prisma.mutation.updatePost(
-    {
-      data: {
-        ...data,
-      },
-      where: {
-        id,
-      },
-    },
-    '{author {id name email posts {id title published}}}'
-  );
-  return post.author;
-};
+// const createPostForUser = async (id, data) => {
+//   const postExist = await prisma.exists.Post({
+//     id,
+//   });
+//   if (!postExist) {
+//     throw new Error('Post not found');
+//   }
+//   const post = await prisma.mutation.updatePost(
+//     {
+//       data: {
+//         ...data,
+//       },
+//       where: {
+//         id,
+//       },
+//     },
+//     '{author {id name email posts {id title published}}}'
+//   );
+//   return post.author;
+// };
 
 // createPostForUser('ckhaqpcns00220782krw17zg2', {
 //   title: 'Updated Post1',
