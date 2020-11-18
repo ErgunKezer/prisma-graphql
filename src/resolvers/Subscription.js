@@ -3,7 +3,7 @@ const Subscription = {
     subscribe(parent, { postId }, { prisma }, info) {
       // takes 2 options.
       // second one is always info
-      // first one is limitation
+      // first one is limitation, your filter
       // prisma => node => client  (it works fine with mutations and queries)
       return prisma.subscription.comment(
         {

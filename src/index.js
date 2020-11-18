@@ -3,7 +3,6 @@ import { GraphQLServer, PubSub } from 'graphql-yoga';
 const pubSub = new PubSub();
 
 // js imports
-import * as db from './db';
 import Comment from './resolvers/Comment';
 import User from './resolvers/User';
 import Post from './resolvers/Post';
@@ -23,7 +22,6 @@ const server = new GraphQLServer({
     Subscription,
   },
   context: {
-    db,
     pubSub,
     prisma,
   },

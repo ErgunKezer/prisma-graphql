@@ -1,21 +1,8 @@
-import { findElementById } from '../util';
-import { v4 } from 'uuid';
-
 export default {
   async createUser(parent, args, { prisma }, info) {
-    const emailTaken = await prisma.exists.User({ email: args.data.email });
-    if (emailTaken) {
-      throw new Error('Email taken.');
-    }
     return prisma.mutation.createUser({ data: args.data }, info);
   },
   async deleteUser(parent, args, { prisma }, info) {
-    const user = await prisma.exists.User({
-      id: args.id,
-    });
-    if (!user) {
-      throw new Error('User not found!');
-    }
     return prisma.mutation.deleteUser(
       {
         where: {
