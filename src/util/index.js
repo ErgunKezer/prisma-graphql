@@ -12,7 +12,6 @@ const getUserId = ({ headers }) => {
   if (!decoded) {
     throw new Error('Authentication required');
   }
-  console.log(decoded);
   return decoded.userId;
 };
 

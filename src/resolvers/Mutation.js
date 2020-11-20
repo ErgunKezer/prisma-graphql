@@ -139,7 +139,17 @@ export default {
       info
     );
   },
-  deleteComment(parent, { id }, { prisma }, info) {
+  async deleteComment(parent, { id }, { prisma, request }, info) {
+    const userId = getUserId(request);
+    const isExist = await prisma.exists.Comment({
+      id,
+      author: {
+        id: userId,
+      },
+    });
+    if (!isExist) {
+      throw new Error('Unable to delete comment');
+    }
     return prisma.mutation.deleteComment(
       {
         where: {
@@ -149,7 +159,17 @@ export default {
       info
     );
   },
-  updateComment(parent, { id, data }, { prisma }, info) {
+  async updateComment(parent, { id, data }, { prisma, request }, info) {
+    const userId = getUserId(request);
+    const isExist = await prisma.exists.Comment({
+      id,
+      author: {
+        id: userId,
+      },
+    });
+    if (!isExist) {
+      throw new Error('Unable to update comment');
+    }
     return prisma.mutation.updateComment(
       {
         data,
