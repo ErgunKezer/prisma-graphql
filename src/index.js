@@ -1,6 +1,5 @@
 // node imports
-import { GraphQLServer, PubSub } from 'graphql-yoga';
-const pubSub = new PubSub();
+import { GraphQLServer } from 'graphql-yoga';
 
 // js imports
 import Comment from './resolvers/Comment';

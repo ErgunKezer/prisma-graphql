@@ -2,17 +2,23 @@ import jwt from 'jsonwebtoken';
 const findElementById = (id, items) => {
   return items.find((item) => item.id === id);
 };
-const getUserId = ({ headers }) => {
+const getUserId = ({ headers }, requireAuth = true) => {
   const header = headers.authorization;
-  if (!header) {
+  if (header) {
+    const token = header.replace('Bearer ', '');
+    const decoded = jwt.verify(token, 'thisismysecret');
+    if (!decoded) {
+      throw new Error('Authentication required');
+    }
+    return decoded.userId;
+  }
+  if (requireAuth) {
     throw new Error('Authentication required');
   }
-  const token = header.replace('Bearer ', '');
-  const decoded = jwt.verify(token, 'thisismysecret');
-  if (!decoded) {
-    throw new Error('Authentication required');
-  }
-  return decoded.userId;
+  return null;
 };
 
-export { findElementById, getUserId };
+const generateError = (error) => {
+  return new Error(error);
+};
+export { findElementById, getUserId, generateError };
