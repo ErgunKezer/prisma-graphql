@@ -7,7 +7,10 @@
       {
         "root": ["."],
         "alias": {
-          "@/util": "./src/util"
+          "@/util": "./src/util",
+          "@/middlewares": "./src/middlewares",
+          "@/mutation": "./src/resolvers/Mutation",
+          "@/query": "./src/resolvers/Query"
         }
       }
     ]

@@ -1,4 +1,4 @@
-import { getUserId, generateError } from '@/util';
+import { generateError } from '@/util';
 export default {
   posts(parents, args, { prisma }, info) {
     const opArgs = {
@@ -18,8 +18,7 @@ export default {
     }
     return prisma.query.posts(opArgs, info);
   },
-  async post(parent, { id }, { prisma, request }, info) {
-    const userId = getUserId(request, false);
+  async post(parent, { id }, { prisma, userId }, info) {
     const posts = await prisma.query.posts(
       {
         where: {
@@ -43,8 +42,7 @@ export default {
     }
     return new Error('Post not found');
   },
-  async myPosts(parent, { query }, { prisma, request }, info) {
-    const userId = getUserId(request);
+  async myPosts(parent, { query }, { prisma, userId }, info) {
     const userExist = await prisma.exists.User({
       id: userId,
     });

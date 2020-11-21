@@ -1,8 +1,6 @@
-import { getUserId } from '@/util';
 export default {
-  async createPost(parent, { data }, { prisma, request }, info) {
+  async createPost(parent, { data }, { prisma, userId }, info) {
     const { title, body, published } = data;
-    const userId = getUserId(request);
     return prisma.mutation.createPost(
       {
         data: {
@@ -19,8 +17,7 @@ export default {
       info
     );
   },
-  async updatePost(parent, { id, data }, { prisma, request }, info) {
-    const userId = getUserId(request);
+  async updatePost(parent, { id, data }, { prisma, userId }, info) {
     const isExist = await prisma.exists.Post({
       id,
       author: {
@@ -40,8 +37,7 @@ export default {
       info
     );
   },
-  async deletePost(parent, { id }, { prisma, request }, info) {
-    const userId = getUserId(request);
+  async deletePost(parent, { id }, { prisma, userId }, info) {
     const postExists = await prisma.exists.Post({
       id,
       author: {

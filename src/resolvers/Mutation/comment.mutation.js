@@ -1,7 +1,5 @@
-import { getUserId } from '@/util';
 export default {
-  async createComment(parent, { data }, { prisma, request }, info) {
-    const userId = getUserId(request);
+  async createComment(parent, { data }, { prisma, userId }, info) {
     return prisma.mutation.createComment(
       {
         data: {
@@ -21,8 +19,7 @@ export default {
       info
     );
   },
-  async deleteComment(parent, { id }, { prisma, request }, info) {
-    const userId = getUserId(request);
+  async deleteComment(parent, { id }, { prisma, userId }, info) {
     const isExist = await prisma.exists.Comment({
       id,
       author: {
@@ -41,8 +38,7 @@ export default {
       info
     );
   },
-  async updateComment(parent, { id, data }, { prisma, request }, info) {
-    const userId = getUserId(request);
+  async updateComment(parent, { id, data }, { prisma, userId }, info) {
     const isExist = await prisma.exists.Comment({
       id,
       author: {

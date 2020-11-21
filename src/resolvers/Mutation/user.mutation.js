@@ -1,6 +1,5 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { getUserId } from '@/util';
 export default {
   async createUser(parent, args, { prisma }, info) {
     const passwordLen = args.data.password && args.data.password.length > 7;
@@ -35,8 +34,7 @@ export default {
       user,
     };
   },
-  async deleteUser(parent, args, { prisma, request }, info) {
-    const userId = getUserId(request);
+  async deleteUser(parent, args, { prisma, userId }, info) {
     return prisma.mutation.deleteUser(
       {
         where: {
@@ -46,8 +44,7 @@ export default {
       info
     );
   },
-  async updateUser(parent, args, { prisma, request }, info) {
-    const userId = getUserId(request);
+  async updateUser(parent, args, { prisma, userId }, info) {
     return prisma.mutation.updateUser(
       {
         where: {

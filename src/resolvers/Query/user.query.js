@@ -1,4 +1,3 @@
-import { getUserId, generateError } from '@/util';
 export default {
   users(parent, args, { prisma }, info) {
     const opArgs = {};
@@ -16,8 +15,7 @@ export default {
     }
     return prisma.query.users(opArgs, info);
   },
-  me(parent, args, { prisma, request }, info) {
-    const userId = getUserId(request);
+  me(parent, args, { prisma, userId }, info) {
     return prisma.query.user(
       {
         where: {
