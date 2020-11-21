@@ -5,9 +5,9 @@
     [
       "module-resolver",
       {
-        "root": ["./src"],
+        "root": ["."],
         "alias": {
-          "@/util": "util"
+          "@/util": "./src/util"
         }
       }
     ]
