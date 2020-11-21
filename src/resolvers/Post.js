@@ -1,4 +1,4 @@
-import { findElementById } from '../util';
+import { findElementById } from '@/util';
 
 export default {
   author(parent, args, { db }, info) {

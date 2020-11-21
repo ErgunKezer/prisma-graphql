@@ -1,4 +1,4 @@
-import { getUserId, generateError } from '../../util';
+import { getUserId, generateError } from '@/util';
 export default {
   users(parent, args, { prisma }, info) {
     const opArgs = {};

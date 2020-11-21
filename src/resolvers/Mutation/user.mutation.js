@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { getUserId } from '../../util';
+import { getUserId } from '@/util';
 export default {
   async createUser(parent, args, { prisma }, info) {
     const passwordLen = args.data.password && args.data.password.length > 7;

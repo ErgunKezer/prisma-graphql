@@ -1,4 +1,4 @@
-import { getUserId } from '../../util';
+import { getUserId } from '@/util';
 export default {
   async createPost(parent, { data }, { prisma, request }, info) {
     const { title, body, published } = data;
