@@ -4,14 +4,7 @@ import jwt from 'jsonwebtoken';
 
 // js imports
 import prisma from './prisma';
-
-import Mutation from '@/mutation';
-import Query from '@/query';
-import Subscription from './resolvers/Subscription';
-
-import Comment from './resolvers/Comment';
-import User from './resolvers/User';
-import Post from './resolvers/Post';
+import { resolvers, fragmentReplacements } from '@/resolvers';
 
 import permissions from '@/middlewares/auth.middleware';
 
@@ -29,14 +22,7 @@ function getUserId({ headers }) {
 
 const server = new GraphQLServer({
   typeDefs: 'src/schema.graphql',
-  resolvers: {
-    Comment,
-    User,
-    Post,
-    Mutation,
-    Query,
-    Subscription,
-  },
+  resolvers,
   context({ request, response }) {
     return {
       request,
@@ -46,6 +32,7 @@ const server = new GraphQLServer({
     };
   },
   middlewares: [permissions],
+  fragmentReplacements,
 });
 
 server.start(() => {
