@@ -26,10 +26,17 @@ const permissions = shield(
       deleteUser: isAuthenticated,
       updateUser: isAuthenticated,
     },
+    Subscription: {
+      myPost: isAuthenticated,
+    },
   },
   {
     fallbackError: (thrownThing, parent, args, context, info) => {
-      return thrownThing;
+      console.log('throw', thrownThing);
+      if (thrownThing) {
+        return thrownThing;
+      }
+      throw new Error('Not Auth');
     },
   }
 );

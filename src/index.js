@@ -8,10 +8,10 @@ import { resolvers, fragmentReplacements } from '@/resolvers';
 
 import permissions from '@/middlewares/auth.middleware';
 
-function getUserId({ headers }) {
+function getUserId(request, connection) {
   let token;
   try {
-    token = headers.authorization;
+    token = request ? request.headers.authorization : connection.context.Authorization;
     token = token.replace('Bearer ', '');
     token = jwt.verify(token, 'thisismysecret');
   } catch (e) {
@@ -23,12 +23,12 @@ function getUserId({ headers }) {
 const server = new GraphQLServer({
   typeDefs: 'src/schema.graphql',
   resolvers,
-  context({ request, response }) {
+  context({ request, response, connection }) {
     return {
       request,
       response,
       prisma,
-      userId: getUserId(request),
+      userId: getUserId(request, connection),
     };
   },
   middlewares: [permissions],

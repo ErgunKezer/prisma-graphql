@@ -33,6 +33,22 @@ const Subscription = {
       );
     },
   },
+  myPost: {
+    subscribe(parent, args, { prisma, userId }, info) {
+      return prisma.subscription.post(
+        {
+          where: {
+            node: {
+              author: {
+                id: userId,
+              },
+            },
+          },
+        },
+        info
+      );
+    },
+  },
 };
 
 export default Subscription;
