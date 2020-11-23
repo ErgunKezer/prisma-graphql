@@ -1,5 +1,12 @@
 export default {
   async createComment(parent, { data }, { prisma, userId }, info) {
+    const postPublished = await prisma.exists.Post({
+      id: data.post,
+      published: true,
+    });
+    if (!postPublished) {
+      throw new Error('Unable to find post');
+    }
     return prisma.mutation.createComment(
       {
         data: {

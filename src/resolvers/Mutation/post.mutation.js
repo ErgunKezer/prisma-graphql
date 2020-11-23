@@ -18,14 +18,25 @@ export default {
     );
   },
   async updatePost(parent, { id, data }, { prisma, userId }, info) {
-    const isExist = await prisma.exists.Post({
-      id,
-      author: {
-        id: userId,
+    const [post] = await prisma.query.posts({
+      where: {
+        id,
+        author: {
+          id: userId,
+        },
       },
     });
-    if (!isExist) {
+    if (!post) {
       throw new Error('Unable to update post');
+    }
+    if (post.published && !data.published) {
+      await prisma.mutation.deleteManyComments({
+        where: {
+          post: {
+            id,
+          },
+        },
+      });
     }
     return prisma.mutation.updatePost(
       {

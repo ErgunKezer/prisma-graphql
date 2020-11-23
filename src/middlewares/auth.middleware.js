@@ -10,21 +10,28 @@ const isAuthenticated = rule({ cache: 'contextual' })(async (parent, args, ctx, 
   return userExist;
 });
 
-const permissions = shield({
-  Query: {
-    myPosts: isAuthenticated,
-    me: isAuthenticated,
+const permissions = shield(
+  {
+    Query: {
+      myPosts: isAuthenticated,
+      me: isAuthenticated,
+    },
+    Mutation: {
+      createPost: isAuthenticated,
+      updatePost: isAuthenticated,
+      deletePost: isAuthenticated,
+      createComment: isAuthenticated,
+      updateComment: isAuthenticated,
+      deleteComment: isAuthenticated,
+      deleteUser: isAuthenticated,
+      updateUser: isAuthenticated,
+    },
   },
-  Mutation: {
-    createPost: isAuthenticated,
-    updatePost: isAuthenticated,
-    deletePost: isAuthenticated,
-    createComment: isAuthenticated,
-    updateComment: isAuthenticated,
-    deleteComment: isAuthenticated,
-    deleteUser: isAuthenticated,
-    updateUser: isAuthenticated,
-  },
-});
+  {
+    fallbackError: (thrownThing, parent, args, context, info) => {
+      return thrownThing;
+    },
+  }
+);
 
 export default permissions;
