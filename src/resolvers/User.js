@@ -22,4 +22,7 @@ export default {
       return prisma.query.posts(opArgs, info);
     },
   },
+  password() {
+    return '';
+  },
 };
