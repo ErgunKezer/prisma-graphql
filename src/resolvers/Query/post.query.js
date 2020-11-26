@@ -2,6 +2,10 @@ import { generateError } from '@/util';
 export default {
   posts(parents, args, { prisma }, info) {
     const opArgs = {
+      first: args.first,
+      skip: args.skip,
+      after: args.after,
+      orderBy: args.orderBy,
       where: {
         published: true,
       },
@@ -42,7 +46,7 @@ export default {
     }
     return new Error('Post not found');
   },
-  async myPosts(parent, { query }, { prisma, userId }, info) {
+  async myPosts(parent, { query, skip, after, first, orderBy }, { prisma, userId }, info) {
     const userExist = await prisma.exists.User({
       id: userId,
     });
@@ -56,6 +60,10 @@ export default {
           id: userId,
         },
       },
+      skip,
+      after,
+      first,
+      orderBy,
     };
     if (query) {
       opArgs.where.OR = [
