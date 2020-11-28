@@ -13,7 +13,7 @@ function getUserId(request, connection) {
   try {
     token = request ? request.headers.authorization : connection.context.Authorization;
     token = token.replace('Bearer ', '');
-    token = jwt.verify(token, 'thisismysecret');
+    token = jwt.verify(token, process.env.TOKEN_SECRET_KEY);
   } catch (e) {
     return null;
   }
@@ -35,6 +35,7 @@ const server = new GraphQLServer({
   fragmentReplacements,
 });
 
-server.start(() => {
+const port = process.env.PORT || 4000;
+server.start({ port }, () => {
   console.log('The server is up');
 });

@@ -7,7 +7,7 @@ const getUserId = ({ headers }, requireAuth = true) => {
   const header = headers.authorization;
   if (header) {
     const token = header.replace('Bearer ', '');
-    const decoded = jwt.verify(token, 'thisismysecret');
+    const decoded = jwt.verify(token, process.env.TOKEN_SECRET_KEY);
     if (!decoded) {
       throw new Error('Authentication required');
     }
@@ -24,7 +24,7 @@ const generateError = (error) => {
 };
 
 const generateToken = (userId) => {
-  return jwt.sign({ userId }, 'thisismysecret', { expiresIn: '7 days' });
+  return jwt.sign({ userId }, process.env.TOKEN_SECRET_KEY, { expiresIn: '7 days' });
 };
 
 const hashPassword = (password) => {
