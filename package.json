@@ -4,11 +4,13 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "",
+    "start": "env-cmd -f config/prod.env node dist/index.js",
+    "heroku-postbuild": "babel src --out-dir dist --copy-files",
     "dev": "env-cmd -f config/dev.env nodemon src/index.js --ext js,graphql --exec babel-node",
     "get-schema": "graphql-codegen --config ./codegen.yml"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.12.1",
     "babel-cli": "^6.26.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.7.0",
