@@ -1,6 +1,6 @@
 import { extractFragmentReplacements } from 'prisma-binding';
 import Mutation from '@/resolvers/Mutation';
-import Query from '@/resolvers/query';
+import Query from '@/resolvers/Query';
 import Subscription from './Subscription';
 
 import Comment from './Comment';
