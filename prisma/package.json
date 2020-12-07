@@ -1,0 +1,10 @@
+{
+  "name": "prisma-config",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "prod-token": "prisma token -e ../config/prod.env",
+    "prod-deploy": "prisma deploy -e ../config/prod.env"
+  }
+}
